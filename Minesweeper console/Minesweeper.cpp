@@ -41,6 +41,7 @@ Minesweeper &Minesweeper::operator=(const Minesweeper &sourceObj)
 void Minesweeper::newGame(int rows, int cols, int mines)
 {
 	clear();
+	this->openedCells.clear();
 	this->gameState = GameState::running;
 	this->rows = rows;
 	this->cols = cols;
