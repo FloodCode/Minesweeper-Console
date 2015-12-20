@@ -304,7 +304,7 @@ std::string Minesweeper::getString()
 			switch (current.state)
 			{
 			case CellState::closed: cellSymbol = '-'; break;
-			case CellState::flagged: cellSymbol = 'F'; break;
+			case CellState::flagged: cellSymbol = 'X'; break;
 			case CellState::opened:
 				switch (current.type)
 				{

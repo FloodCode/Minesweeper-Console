@@ -53,12 +53,9 @@ void MineUI::newGame()
 	case 4:
 		system("cls");
 		int w, h, mines;
-		std::cout << "Width:" << std::endl;
-		w = readInt("> ", 4, 30);
-		std::cout << "Height:" << std::endl;
-		h = readInt("> ", 4, 30);
-		std::cout << "Mines count:" << std::endl;
-		mines = readInt("> ", 1, int(w * h * 0.9));
+		w = readInt("Width: ", 4, 30);
+		h = readInt("Height: ", 4, 30);
+		mines = readInt("Mines: ", 1, int(w * h * 0.9));
 		minesweeper = Minesweeper(h, w, mines);
 		break;
 	}
@@ -87,6 +84,7 @@ void MineUI::runGame()
 		}
 	}
 	system("cls");
+	std::cout << minesweeper.getString();
 	switch (gameState)
 	{
 	case GameState::loose:
