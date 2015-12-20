@@ -27,8 +27,20 @@ Minesweeper::Minesweeper(int rows, int cols, int mines)
 	newGame(rows, cols, mines);
 }
 
+Minesweeper::~Minesweeper()
+{
+	clear();
+}
+
+Minesweeper &Minesweeper::operator=(const Minesweeper &sourceObj)
+{
+	newGame(sourceObj.rows, sourceObj.cols, sourceObj.minesTotal);
+	return *this;
+}
+
 void Minesweeper::newGame(int rows, int cols, int mines)
 {
+	clear();
 	this->gameState = GameState::running;
 	this->rows = rows;
 	this->cols = cols;
@@ -244,6 +256,16 @@ bool Minesweeper::cellExist(int row, int col)
 	return cellExist(Point(row, col));
 }
 
+int Minesweeper::getWidth()
+{
+	return cols;
+}
+
+int Minesweeper::getHeight()
+{
+	return rows;
+}
+
 GameState Minesweeper::getGameState()
 {
 	return gameState;
@@ -303,4 +325,16 @@ std::string Minesweeper::getString()
 		result << std::endl;
 	}
 	return result.str();
+}
+
+void Minesweeper::clear()
+{
+	if (rows != -1 && cols != -1)
+	{
+		for (int row = 0; row < rows; row++)
+		{
+			delete[]minefield[row];
+		}
+		delete[]minefield;
+	}
 }

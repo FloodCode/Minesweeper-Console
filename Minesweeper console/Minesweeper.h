@@ -47,7 +47,8 @@ private:
 		int row;
 	};
 
-	int rows, cols, minesTotal, openedCount, flagsCount, cellsCount;
+	int rows = -1, cols = -1, minesTotal, openedCount, flagsCount, cellsCount;
+	time_t timeStart;
 	GameState gameState;
 	std::vector<Point> openedCells;
 	Cell **minefield;
@@ -63,11 +64,16 @@ private:
 public:
 	Minesweeper();
 	Minesweeper(int rows, int cols, int mines);
+	~Minesweeper();
+	Minesweeper &operator=(const Minesweeper &sourceObj);
 	void newGame(int rows, int cols, int mines);
 	void openCell(int row, int col);
 	void flagCell(int row, int col);
+	void clear();
 	bool cellExist(int row, int col);
+	int getWidth();
+	int getHeight();
 	GameState getGameState();
 	std::string getString();
 };
-#endif // MINESWEEPER_H
+#endif // !MINESWEEPER_H
