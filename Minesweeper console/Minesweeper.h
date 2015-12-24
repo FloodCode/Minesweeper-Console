@@ -48,7 +48,7 @@ private:
 		int row;
 	};
 
-	int rows = -1, cols = -1, minesTotal, openedCount, flagsCount, cellsCount;
+	int rows, cols, minesTotal, openedCount, flagsCount, cellsCount;
 	time_t timeStart;
 	GameState gameState;
 	std::vector<Point> openedCells;
