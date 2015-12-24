@@ -38,6 +38,7 @@ Minesweeper &Minesweeper::operator=(const Minesweeper &sourceObj)
 	return *this;
 }
 
+// Initialize object attributes with pre-validation
 void Minesweeper::newGame(int rows, int cols, int mines)
 {
 	this->rows = -1;
@@ -57,6 +58,9 @@ void Minesweeper::newGame(int rows, int cols, int mines)
 	generateMinefield(-1, -1);
 }
 
+// Allocate memory for minefield.
+// Place given amount of mines.
+// Generate hints for every cell excluding mines.
 void Minesweeper::generateMinefield(int excludeRow, int excludeCol)
 {
 	if (minefield == 0)
@@ -76,7 +80,7 @@ void Minesweeper::generateMinefield(int excludeRow, int excludeCol)
 		colN = rand() % cols;
 		if (rowN == excludeRow && colN == excludeCol)
 		{
-			break;
+			continue;
 		}
 		if (minefield[rowN][colN].type != CellType::mine)
 		{
@@ -97,6 +101,7 @@ void Minesweeper::generateMinefield(int excludeRow, int excludeCol)
 	}
 }
 
+// Returns true if given cell is mine
 bool Minesweeper::isMine(Point crd)
 {
 	if (crd.col < 0 || crd.col >= cols || crd.row < 0 || crd.row >= rows)
@@ -106,6 +111,7 @@ bool Minesweeper::isMine(Point crd)
 	return (minefield[crd.row][crd.col].type == CellType::mine);
 }
 
+// Returns true if openCells vector contains given cell
 bool Minesweeper::isInOpened(Point crd)
 {
 	for each (Point p in openedCells)
@@ -115,6 +121,7 @@ bool Minesweeper::isInOpened(Point crd)
 	return false;
 }
 
+// Opens given cell
 void Minesweeper::openCell(int row, int col)
 {
 	if (gameState == GameState::newgame)
@@ -166,6 +173,7 @@ void Minesweeper::openCell(int row, int col)
 	}
 }
 
+// Returns hint for given cell
 CellType Minesweeper::getHint(Point crd)
 {
 	int result = 0;
@@ -180,6 +188,7 @@ CellType Minesweeper::getHint(Point crd)
 	return CellType(result);
 }
 
+// Opens every neighbour of given cell
 std::vector<Minesweeper::Point> Minesweeper::openSquare(Point crd)
 {
 	std::vector<Point> result;
@@ -294,6 +303,7 @@ int Minesweeper::getRows()
 	return rows;
 }
 
+// Returns amount of seconds since first cell was opened
 int Minesweeper::getTime()
 {
 	return timeStart == 0 ? 0 : int((clock() - timeStart) / CLOCKS_PER_SEC);
@@ -314,6 +324,7 @@ GameState Minesweeper::getGameState()
 	return gameState;
 }
 
+// Returns ASCII representation of minefield
 std::string Minesweeper::getString()
 {
 	std::stringstream result;
@@ -372,6 +383,7 @@ std::string Minesweeper::getString()
 	return result.str();
 }
 
+// Frees memory allocated for minefield
 void Minesweeper::clear()
 {
 	if (rows != -1 && cols != -1)

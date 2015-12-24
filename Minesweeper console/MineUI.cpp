@@ -137,20 +137,20 @@ void MineUI::render()
 			switch (current.state)
 			{
 			case CellState::closed: cellSymbol = '-'; break;
-			case CellState::flagged: cellSymbol = 'F'; color = 139; break;
+			case CellState::flagged: cellSymbol = 'F'; color = 127; break;
 			case CellState::opened:
 				switch (current.type)
 				{
-				case CellType::empty: cellSymbol = ' '; color = 128; break;
-				case CellType::mine: cellSymbol = '*'; color = 196; break;
-				case CellType::n1: cellSymbol = '1'; color = 137; break;
-				case CellType::n2: cellSymbol = '2'; color = 130; break;
-				case CellType::n3: cellSymbol = '3'; color = 140; break;
-				case CellType::n4: cellSymbol = '4'; color = 129; break;
-				case CellType::n5: cellSymbol = '5'; color = 132; break;
-				case CellType::n6: cellSymbol = '6'; color = 131; break;
-				case CellType::n7: cellSymbol = '7'; color = 128; break;
-				case CellType::n8: cellSymbol = '8'; color = 135; break;
+				case CellType::empty: cellSymbol = ' '; color = 112; break;
+				case CellType::mine: cellSymbol = '*'; color = 124; break;
+				case CellType::n1: cellSymbol = '1'; color = 121; break;
+				case CellType::n2: cellSymbol = '2'; color = 114; break;
+				case CellType::n3: cellSymbol = '3'; color = 124; break;
+				case CellType::n4: cellSymbol = '4'; color = 113; break;
+				case CellType::n5: cellSymbol = '5'; color = 116; break;
+				case CellType::n6: cellSymbol = '6'; color = 115; break;
+				case CellType::n7: cellSymbol = '7'; color = 112; break;
+				case CellType::n8: cellSymbol = '8'; color = 120; break;
 				}
 				break;
 			}
