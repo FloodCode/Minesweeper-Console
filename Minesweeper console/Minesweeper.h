@@ -12,34 +12,34 @@ enum GameState
 	loose,
 	running
 };
+enum CellType
+{
+	empty = 0,
+	n1 = 1,
+	n2 = 2,
+	n3 = 3,
+	n4 = 4,
+	n5 = 5,
+	n6 = 6,
+	n7 = 7,
+	n8 = 8,
+	mine = 9
+};
+enum CellState
+{
+	opened,
+	closed,
+	flagged
+};
+struct Cell
+{
+	Cell();
+	CellType type;
+	CellState state;
+};
 class Minesweeper
 {
 private:
-	enum CellType
-	{
-		empty = 0,
-		n1 = 1,
-		n2 = 2,
-		n3 = 3,
-		n4 = 4,
-		n5 = 5,
-		n6 = 6,
-		n7 = 7,
-		n8 = 8,
-		mine = 9
-	};
-	enum CellState
-	{
-		opened,
-		closed,
-		flagged
-	};
-	struct Cell
-	{
-		Cell();
-		CellType type;
-		CellState state;
-	};
 	struct Point
 	{
 		Point(int row, int col);
@@ -73,10 +73,11 @@ public:
 	void flagCell(int row, int col);
 	void clear();
 	bool cellExist(int row, int col);
-	int getWidth();
-	int getHeight();
+	int getCols();
+	int getRows();
 	int getTime();
 	int getMinesLeft();
+	Cell **getMinefield();
 	GameState getGameState();
 	std::string getString();
 };

@@ -1,6 +1,6 @@
 #include "Minesweeper.h"
 
-Minesweeper::Cell::Cell()
+Cell::Cell()
 {
 	this->type = CellType::empty;
 	this->state = CellState::closed;
@@ -164,7 +164,7 @@ void Minesweeper::openCell(int row, int col)
 	}
 }
 
-Minesweeper::CellType Minesweeper::getHint(Point crd)
+CellType Minesweeper::getHint(Point crd)
 {
 	int result = 0;
 	if (isMine(Point(crd.row + 1, crd.col + 1))) result++;
@@ -282,12 +282,12 @@ bool Minesweeper::cellExist(int row, int col)
 	return cellExist(Point(row, col));
 }
 
-int Minesweeper::getWidth()
+int Minesweeper::getCols()
 {
 	return cols;
 }
 
-int Minesweeper::getHeight()
+int Minesweeper::getRows()
 {
 	return rows;
 }
@@ -300,6 +300,11 @@ int Minesweeper::getTime()
 int Minesweeper::getMinesLeft()
 {
 	return minesTotal - flagsCount;
+}
+
+Cell **Minesweeper::getMinefield()
+{
+	return minefield;
 }
 
 GameState Minesweeper::getGameState()
