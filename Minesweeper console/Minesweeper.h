@@ -7,6 +7,7 @@
 #include <sstream>
 enum GameState
 {
+	newgame,
 	win,
 	loose,
 	running
@@ -55,6 +56,7 @@ private:
 
 	void victory();
 	void defeat();
+	void generateMinefield(int excludeRow, int excludeCol);
 	bool forceOpen(Point crd);
 	bool isMine(Point crd);
 	bool isInOpened(Point crd);
@@ -73,6 +75,8 @@ public:
 	bool cellExist(int row, int col);
 	int getWidth();
 	int getHeight();
+	int getTime();
+	int getMinesLeft();
 	GameState getGameState();
 	std::string getString();
 };

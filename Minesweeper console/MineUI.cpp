@@ -65,7 +65,7 @@ void MineUI::newGame()
 void MineUI::runGame()
 {
 	GameState gameState;
-	while ((gameState = minesweeper.getGameState()) == GameState::running)
+	do
 	{
 		system("cls");
 		std::cout << minesweeper.getString();
@@ -82,7 +82,7 @@ void MineUI::runGame()
 		{
 			minesweeper.flagCell(row - 1, col - 1);
 		}
-	}
+	} while ((gameState = minesweeper.getGameState()) == GameState::running);
 	system("cls");
 	std::cout << minesweeper.getString();
 	switch (gameState)

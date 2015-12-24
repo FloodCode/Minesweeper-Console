@@ -42,25 +42,40 @@ void Minesweeper::newGame(int rows, int cols, int mines)
 {
 	clear();
 	this->openedCells.clear();
-	this->gameState = GameState::running;
-	this->rows = rows;
-	this->cols = cols;
-	this->minesTotal = mines;
+	this->gameState = GameState::newgame;
+	this->rows = rows < 1 ? 4 : rows > 30 ? 30 : rows;
+	this->cols = cols < 1 ? 4 : cols > 30 ? 30 : cols;
+	this->minesTotal = mines < 1 ? 1 : mines > (rows * cols * 0.9) ? int(rows * cols * 0.9) : mines;
 	this->cellsCount = rows * cols;
 	this->openedCount = 0;
 	this->flagsCount = 0;
+	this->minefield = 0;
+	this->timeStart = 0;
 
-	this->minefield = new Cell*[rows];
-	for (int i = 0; i < rows; i++)
+	generateMinefield(-1, -1);
+}
+
+void Minesweeper::generateMinefield(int excludeRow, int excludeCol)
+{
+	if (minefield == 0)
 	{
-		minefield[i] = new Cell[cols];
+		minefield = new Cell*[rows];
+		for (int i = 0; i < rows; i++)
+		{
+			minefield[i] = new Cell[cols];
+		}
 	}
+
 	srand(time(0));
 	int minesCount = 0, rowN, colN;
 	while (minesCount != minesTotal)
 	{
 		rowN = rand() % rows;
 		colN = rand() % cols;
+		if (rowN == excludeRow && colN == excludeCol)
+		{
+			break;
+		}
 		if (minefield[rowN][colN].type != CellType::mine)
 		{
 			minefield[rowN][colN].type = CellType::mine;
@@ -100,6 +115,16 @@ bool Minesweeper::isInOpened(Point crd)
 
 void Minesweeper::openCell(int row, int col)
 {
+	if (gameState == GameState::newgame)
+	{
+		if (minefield[row][col].type == CellType::mine)
+		{
+			generateMinefield(row, col);
+		}
+		gameState = GameState::running;
+		timeStart = clock();
+	}
+
 	Cell *cell = &minefield[row][col];
 
 	if (cell->state == CellState::flagged)
@@ -204,7 +229,7 @@ bool Minesweeper::forceOpen(Point crd)
 {
 	if (cellExist(crd) &&
 		minefield[crd.row][crd.col].state == CellState::closed &&
-		gameState == GameState::running)
+		(gameState == GameState::running || gameState == GameState::newgame))
 	{
 		minefield[crd.row][crd.col].state = CellState::opened;
 		this->openedCount++;
@@ -267,6 +292,16 @@ int Minesweeper::getHeight()
 	return rows;
 }
 
+int Minesweeper::getTime()
+{
+	return timeStart == 0 ? 0 : int((clock() - timeStart) / CLOCKS_PER_SEC);
+}
+
+int Minesweeper::getMinesLeft()
+{
+	return minesTotal - flagsCount;
+}
+
 GameState Minesweeper::getGameState()
 {
 	return gameState;
@@ -325,6 +360,8 @@ std::string Minesweeper::getString()
 		}
 		result << std::endl;
 	}
+	result << "Time: " << getTime() << "s" << std::endl;
+	result << "Mines: " << getMinesLeft() << std::endl;
 	return result.str();
 }
 
