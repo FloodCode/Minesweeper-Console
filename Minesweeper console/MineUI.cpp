@@ -65,27 +65,41 @@ void MineUI::newGame()
 void MineUI::runGame()
 {
 	bool exit = false;
+	bool doRender;
 	render();
 	do
 	{
+		doRender = true;
 		int keyCode = getch();
 		switch (keyCode)
 		{
 		case 72:
 			// Up arrow
-			if (cursorRow > 0) cursorRow--;
+			if (cursorRow > 0)
+				cursorRow--;
+			else
+				doRender = false;
 			break;
 		case 80:
 			// Down arrow
-			if (cursorRow < minesweeper.getRows() - 1) cursorRow++;
+			if (cursorRow < minesweeper.getRows() - 1)
+				cursorRow++;
+			else
+				doRender = false;
 			break;
 		case 75:
 			// Left arrow
-			if (cursorCol > 0) cursorCol--;
+			if (cursorCol > 0)
+				cursorCol--;
+			else
+				doRender = false;
 			break;
 		case 77:
 			// Right arrow
-			if (cursorCol < minesweeper.getCols() - 1) cursorCol++;
+			if (cursorCol < minesweeper.getCols() - 1)
+				cursorCol++;
+			else
+				doRender = false;
 			break;
 		case 13:
 			// Enter
@@ -98,14 +112,19 @@ void MineUI::runGame()
 		case 27:
 			// Esc
 			exit = true;
+			doRender = false;
 			break;
 		case 83:
 			minesweeper.flagCell(cursorRow, cursorCol);
 			break;
 		default:
+				doRender = false;
 			break;
 		}
-		render();
+		if (doRender)
+		{
+			render();
+		}
 	} while (!exit);
 	switch (minesweeper.getGameState())
 	{
@@ -137,12 +156,12 @@ void MineUI::render()
 			switch (current.state)
 			{
 			case CellState::closed: cellSymbol = '-'; break;
-			case CellState::flagged: cellSymbol = 'F'; color = 127; break;
+			case CellState::flagged: cellSymbol = '#'; color = 123; break;
 			case CellState::opened:
 				switch (current.type)
 				{
 				case CellType::empty: cellSymbol = ' '; color = 112; break;
-				case CellType::mine: cellSymbol = '*'; color = 124; break;
+				case CellType::mine: cellSymbol = '*'; color = 12; break;
 				case CellType::n1: cellSymbol = '1'; color = 121; break;
 				case CellType::n2: cellSymbol = '2'; color = 114; break;
 				case CellType::n3: cellSymbol = '3'; color = 124; break;
