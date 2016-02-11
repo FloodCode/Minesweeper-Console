@@ -36,7 +36,8 @@ void MineUI::newGame()
 	std::cout << "\t2. Intermediate" << std::endl;
 	std::cout << "\t3. Expert" << std::endl;
 	std::cout << "\t4. Custom" << std::endl;
-	int answer = readInt("> ", 1, 4);
+	std::cout << "\t0. Back" << std::endl;
+	int answer = readInt("> ", 0, 4);
 	switch (answer)
 	{
 	case 1:
@@ -55,6 +56,9 @@ void MineUI::newGame()
 		h = readInt("Height: ", 4, 30);
 		mines = readInt("Mines: ", 1, int(w * h * 0.9));
 		minesweeper = Minesweeper(h, w, mines);
+		break;
+	case 0:
+		return;
 		break;
 	}
 	cursorRow = 0;
