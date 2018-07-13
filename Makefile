@@ -1,7 +1,7 @@
 TARGET = minesweeper
 
 CC = g++
-CFLAGS = -c -Wall
+CFLAGS = -c -Wall -Wno-switch
 LFLAGS =
 
 SRCDIR = src
@@ -23,12 +23,12 @@ all: $(SOURCES) $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	@echo "$(ccblue)Linking...$(ccend)"
-	$(CC) $(LFLAGS) $(OBJECTS) -o $(BINDIR)/$@
+	@$(CC) $(LFLAGS) $(OBJECTS) -o $(BINDIR)/$@
 	@echo "$(ccgreen)Done!$(ccend)"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 	@echo "$(ccblue)Compiling $(ccgreen)$<$(ccend)"
-	$(CC) $(CFLAGS) $< -o $@
+	@$(CC) $(CFLAGS) $< -o $@
 
 clean:
 	@rm -f $(OBJECTS)
