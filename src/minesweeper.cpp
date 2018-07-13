@@ -1,4 +1,4 @@
-#include "Minesweeper.h"
+#include "minesweeper.h"
 
 Cell::Cell()
 {
@@ -114,10 +114,10 @@ bool Minesweeper::isMine(Point crd)
 // Returns true if openCells vector contains given cell
 bool Minesweeper::isInOpened(Point crd)
 {
-	for each (Point p in openedCells)
-	{
-		if (p == crd) return true;
+	for (auto p = openedCells.begin(); p != openedCells.end(); p++) {
+		if (*p == crd) return true;
 	}
+
 	return false;
 }
 
@@ -158,9 +158,8 @@ void Minesweeper::openCell(int row, int col)
 				{
 					std::vector<Point> near = openSquare(queue[i]);
 					openedCells.push_back(queue[i]);
-					for each (Point p in near)
-					{
-						if (!isInOpened(p)) newQueue.push_back(p);
+					for (auto p = near.begin(); p != near.end(); p++) {
+						if (!isInOpened(*p)) newQueue.push_back(*p);
 					}
 				}
 			}

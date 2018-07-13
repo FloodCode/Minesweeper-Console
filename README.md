@@ -1,2 +1,2 @@
-# Minesweeper-Console
-Console version of minesweeper game
+# minesweeper-cli
+CLI version of minesweeper game

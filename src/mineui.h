@@ -3,9 +3,7 @@
 #define MINE_VER "0.0.3"
 #include <iostream>
 #include <string>
-#include <conio.h>
-#include <Windows.h>
-#include "Minesweeper.h"
+#include "minesweeper.h"
 class MineUI
 {
 private:

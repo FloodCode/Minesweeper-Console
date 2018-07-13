@@ -1,4 +1,4 @@
-#include "MineUI.h"
+#include "mineui.h"
 
 void MineUI::Start()
 {
@@ -10,7 +10,7 @@ void MineUI::mainMenu()
 	bool repeat = true;
 	while (repeat)
 	{
-		system("cls");
+		system("clear");
 		std::cout << "Minesweeper v" << MINE_VER << std::endl;
 		std::cout << "Menu:" << std::endl;
 		std::cout << "\t1. New game" << std::endl;
@@ -30,7 +30,7 @@ void MineUI::mainMenu()
 
 void MineUI::newGame()
 {
-	system("cls");
+	system("clear");
 	std::cout << "Dificulty:" << std::endl;
 	std::cout << "\t1. Beginner" << std::endl;
 	std::cout << "\t2. Intermediate" << std::endl;
@@ -50,7 +50,7 @@ void MineUI::newGame()
 		minesweeper = Minesweeper(16, 30, 99);
 		break;
 	case 4:
-		system("cls");
+		system("clear");
 		int w, h, mines;
 		w = readInt("Width: ", 4, 30);
 		h = readInt("Height: ", 4, 30);
@@ -74,7 +74,7 @@ void MineUI::runGame()
 	do
 	{
 		doRender = true;
-		int keyCode = getch();
+		int keyCode = getchar();
 		switch (keyCode)
 		{
 		case 72:
@@ -130,6 +130,7 @@ void MineUI::runGame()
 			render();
 		}
 	} while (!exit);
+
 	switch (minesweeper.getGameState())
 	{
 	case GameState::loose:
@@ -144,40 +145,35 @@ void MineUI::runGame()
 
 void MineUI::render()
 {
-	HANDLE hConsole;
-	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	Cell **minefield = minesweeper.getMinefield();
 	Cell current;
 	char cellSymbol;
-	int color;
-	system("cls");
+	system("clear");
 	for (int row = 0; row < minesweeper.getRows(); row++)
 	{
 		for (int col = 0; col < minesweeper.getCols(); col++)
 		{
 			current = minefield[row][col];
-			color = 7;
 			switch (current.state)
 			{
 			case CellState::closed: cellSymbol = '-'; break;
-			case CellState::flagged: cellSymbol = '#'; color = 123; break;
+			case CellState::flagged: cellSymbol = '#'; break;
 			case CellState::opened:
 				switch (current.type)
 				{
-				case CellType::empty: cellSymbol = ' '; color = 112; break;
-				case CellType::mine: cellSymbol = '*'; color = 12; break;
-				case CellType::n1: cellSymbol = '1'; color = 121; break;
-				case CellType::n2: cellSymbol = '2'; color = 114; break;
-				case CellType::n3: cellSymbol = '3'; color = 124; break;
-				case CellType::n4: cellSymbol = '4'; color = 113; break;
-				case CellType::n5: cellSymbol = '5'; color = 116; break;
-				case CellType::n6: cellSymbol = '6'; color = 115; break;
-				case CellType::n7: cellSymbol = '7'; color = 112; break;
-				case CellType::n8: cellSymbol = '8'; color = 120; break;
+				case CellType::empty: cellSymbol = ' '; break;
+				case CellType::mine: cellSymbol = '*'; break;
+				case CellType::n1: cellSymbol = '1'; break;
+				case CellType::n2: cellSymbol = '2'; break;
+				case CellType::n3: cellSymbol = '3'; break;
+				case CellType::n4: cellSymbol = '4'; break;
+				case CellType::n5: cellSymbol = '5'; break;
+				case CellType::n6: cellSymbol = '6'; break;
+				case CellType::n7: cellSymbol = '7'; break;
+				case CellType::n8: cellSymbol = '8'; break;
 				}
 				break;
 			}
-			SetConsoleTextAttribute(hConsole, color);
 			if (cursorRow != row || cursorCol != col)
 			{
 				std::cout << ' ' << cellSymbol << ' ';
@@ -189,7 +185,7 @@ void MineUI::render()
 		}
 		std::cout << std::endl;
 	}
-	SetConsoleTextAttribute(hConsole, 7);
+	
 	std::cout << "Time: " << minesweeper.getTime() << "s" << std::endl;
 	std::cout << "Mines: " << minesweeper.getMinesLeft() << std::endl;
 }
@@ -213,7 +209,7 @@ int MineUI::readInt(const char *mask, int min, int max)
 int MineUI::toInt(std::string str)
 {
 	if (str.length() >= 10) return -1;
-	for (int i = 0; i < str.length(); i++)
+	for (size_t i = 0; i < str.length(); i++)
 	{
 		if (str[i] < 48 || str[i] > 57) return -1;
 	}

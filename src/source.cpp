@@ -1,5 +1,5 @@
 #include <iostream>
-#include "MineUI.h"
+#include "mineui.h"
 
 using namespace std;
 
